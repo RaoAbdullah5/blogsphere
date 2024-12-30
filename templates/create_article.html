@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Article - BlogSphere{% endblock %}
+
+{% block content %}
+<style>
+    /* Styling the form container */
+    .create-article-container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #F5EFFF;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Styling the form groups */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    /* Styling for the labels */
+    .form-group label {
+        display: block;
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    /* Styling for input fields */
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 2px solid #A1D6CB;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    /* Input and textarea focus styling */
+    .form-group input:focus,
+    .form-group textarea:focus {
+        border-color: #A294F9;
+        outline: none;
+        box-shadow: 0 0 5px #A1D6CB;
+    }
+
+    /* Button styling */
+    .btn-primary {
+        background-color: #A294F9;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+        display: block;
+        width: 100%;
+        text-align: center;
+        margin: 0 auto; /* Centering the button */
+    }
+
+    .btn-primary:hover {
+        background-color: #CDC1FF;
+    }
+
+    /* Styling for textarea content */
+    .form-group textarea {
+        resize: vertical;  /* Allows resizing of textarea vertically */
+    }
+
+    /* Align the button to center */
+    .form-group .btn-primary {
+        width: auto; /* Set to auto to allow button to have natural width */
+        margin: 0 auto; /* Centering the button */
+    }
+</style>
+
+    <div class="create-article-container">
+        <h2>Create Article</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Create Article</button>
+        </form>
+    </div>
+{% endblock %}

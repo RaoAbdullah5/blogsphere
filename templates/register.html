@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+
+{% block title %}Register - BlogSphere{% endblock %}
+{% block content %}
+
+<style>
+    /* Container for the registration form */
+    main .container .registration-container {
+        max-width: 500px;
+        margin: 50px auto;
+        background-color: #F5EFFF;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    /* Title style for the form */
+    .registration-container h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    /* Form group styling */
+    .form-group {
+        margin-bottom: 20px;
+        text-align: left;
+    }
+
+    /* Label and input field styling */
+    .form-group label {
+        display: block;
+        font-size: 16px;
+        color: #444;
+        margin-bottom: 8px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 10px;
+        border: 2px solid #A1D6CB;
+        border-radius: 6px;
+        font-size: 16px;
+        color: #333;
+    }
+
+    .form-group input:focus {
+        border-color: #A294F9;
+        outline: none;
+        box-shadow: 0 0 5px #A1D6CB;
+    }
+
+    /* Styling for the help text */
+    .helptext {
+        font-size: 12px;
+        color: #777;
+        margin-top: 5px;
+    }
+
+    /* Error message styling */
+    .errorlist {
+        color: #ff4d4d;
+        font-size: 14px;
+        list-style: none;
+        padding: 0;
+        margin-top: 5px;
+    }
+
+    .errorlist li {
+        margin-bottom: 5px;
+    }
+
+    /* Styling for the submit button */
+    .btn-primary {
+        background-color: #A294F9;
+        color: white;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    .btn-primary:hover {
+        background-color: #CDC1FF;
+    }
+
+    /* Paragraph and link style */
+    .registration-container p {
+        margin-top: 20px;
+        font-size: 14px;
+        color: #555;
+    }
+
+    .registration-container a {
+        color: #A294F9;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .registration-container a:hover {
+        text-decoration: underline;
+    }
+</style>
+    <div class="registration-container">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+        <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+    </div>
+{% endblock %}

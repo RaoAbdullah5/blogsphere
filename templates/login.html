@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - BlogSphere{% endblock %}
+
+{% block content %}
+<style>
+    /* General styling for the login page */
+    .login-container {
+        background-color: #f5efff; /* Light background */
+        padding: 30px;
+        max-width: 450px;
+        margin: 80px auto;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* Heading Style */
+    .login-container h2 {
+        text-align: center;
+        font-size: 26px;
+        color: #4a2c9c; /* Dark purple color */
+        margin-bottom: 25px;
+    }
+
+    /* Form Group Style */
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 16px;
+        color: #4a2c9c;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    .form-group input {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        background-color: #ffffff;
+        transition: border-color 0.3s ease;
+    }
+
+    /* Input Focus Effect */
+    .form-group input:focus {
+        border-color: #A294F9; /* Light purple border */
+        outline: none;
+    }
+
+    /* Button Style */
+    .btn-primary {
+        background-color: #A294F9; /* Light purple */
+        border: none;
+        color: white;
+        padding: 12px;
+        font-size: 16px;
+        width: 100%;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    /* Button Hover Effect */
+    .btn-primary:hover {
+        background-color: #6c45e1; /* Darker purple on hover */
+    }
+
+    /* Link Style */
+    .login-container p {
+        text-align: center;
+        font-size: 14px;
+        margin-top: 20px;
+    }
+
+    .login-container a {
+        color: #6c45e1; /* Dark purple color */
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .login-container a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive for smaller screens */
+    @media (max-width: 600px) {
+        .login-container {
+            padding: 20px;
+            margin: 40px auto;
+        }
+
+        .btn-primary {
+            font-size: 14px;
+        }
+    }
+</style>
+
+<div class="login-container">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            <label for="id_password">Password:</label>
+            {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    <p>Don't have an account? <a href="{% url 'register' %}">Register here</a></p>
+</div>
+
+{% endblock %}

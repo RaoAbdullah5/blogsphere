@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ article.title }} - BlogSphere{% endblock %}
+
+{% block content %}
+<style>
+    /* Article Detail Container */
+    .article-detail-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #F5EFFF;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Heading for Article */
+    .article-detail-container h2 {
+        font-size: 32px;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    /* Article Content */
+    .article-detail-container p {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    /* Small Text for Publication Date */
+    .article-detail-container .text-muted {
+        font-size: 14px;
+        color: #A1D6CB;
+    }
+
+    /* Comments Section */
+    .comments-section {
+        margin-top: 40px;
+        background-color: #FFFFFF;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .comments-section h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    /* Individual Comment Styling */
+    .comment {
+        margin-bottom: 15px;
+        padding: 10px;
+        background-color: #F9F9F9;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .comment p {
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .comment .btn-danger {
+        font-size: 14px;
+    }
+
+    /* Leave Comment Section */
+    .leave-comment {
+        margin-top: 40px;
+        background-color: #FFFFFF;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .leave-comment h3 {
+        font-size: 24px;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .leave-comment form p {
+        margin-bottom: 20px;
+    }
+
+    .leave-comment textarea {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border: 1px solid #E5D9F2;
+        border-radius: 8px;
+        background-color: #F5EFFF;
+        resize: vertical;
+    }
+
+    /* Delete Button */
+    .btn-danger {
+        background-color: #FF6F61; /* Soft red background */
+        color: white;
+        padding: 8px 15px;
+        font-size: 14px;
+        border-radius: 5px;
+        text-decoration: none;
+        display: inline-block;
+        text-align: center;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    /* Hover effect for Delete Button */
+    .btn-danger:hover {
+        background-color: #E85C4D; /* Darker red on hover */
+        transform: scale(1.05); /* Slight zoom effect on hover */
+    }
+
+    /* Focus state for accessibility */
+    .btn-danger:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* Soft outline for focus state */
+    }
+
+    /* Add margin for Delete Article button */
+    .delete-article-btn {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .delete-article-btn .btn-danger {
+        padding: 10px 20px;
+        font-size: 16px;
+        width: auto;
+        margin: 0 auto;
+        display: inline-block;
+    }
+
+    .leave-comment .btn-primary {
+        background-color: #A1D6CB;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+
+    .leave-comment .btn-primary:hover {
+        background-color: #8FC4B6;
+    }
+</style>
+
+<div class="article-detail-container">
+    <h2>{{ article.title }}</h2>
+    <p>{{ article.content }}</p>
+    <small class="text-muted">Published on {{ article.published_date }}</small>
+
+    <!-- Delete Article Button -->
+    {% if user == article.aauthor %}
+    <div class="delete-article-btn">
+        <a href="{% url 'delete_article' article.id %}" class="btn btn-danger">Delete Article</a>
+    </div>
+    {% endif %}
+
+    <div class="comments-section">
+        <h3>Comments</h3>
+        {% for comment in comments %}
+            <div class="comment">
+                <p><strong>{{ comment.user.username }}:</strong> {{ comment.content }}</p>
+                {% if comment.user == user %}
+                    <a href="{% url 'delete_comment' comment.id %}" class="btn btn-danger btn-sm">Delete</a>
+                {% endif %}
+            </div>
+        {% empty %}
+            <p>No comments yet. Be the first to comment!</p>
+        {% endfor %}
+    </div>
+
+    <div class="leave-comment">
+        <h3>Leave a Comment</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{ comment_form.as_p }}
+            <button type="submit" class="btn btn-primary">Post Comment</button>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

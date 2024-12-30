@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Articles - BlogSphere{% endblock %}
+
+{% block content %}
+<style>
+    /* Styling for the container of articles */
+    .articles-container {
+        max-width: 800px;
+        margin: 50px auto;
+        padding: 20px;
+        background-color: #F5EFFF;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Heading styling */
+    .articles-container h2 {
+        text-align: center;
+        font-size: 28px;
+        color: #333;
+        margin-bottom: 30px;
+    }
+
+    /* List styling */
+    .list-group {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .article-item {
+        background-color: #FFFFFF;
+        border: 1px solid #E5D9F2;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        padding: 15px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+    }
+
+    .article-item:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .article-item h5 {
+        font-size: 20px;
+        margin-bottom: 10px;
+        color: #A294F9;
+    }
+
+    .article-link {
+        text-decoration: none;
+        color: #A294F9;
+    }
+
+    .article-link:hover {
+        text-decoration: underline;
+    }
+
+    .article-item p {
+        color: #333;
+        font-size: 16px;
+        line-height: 1.5;
+    }
+</style>
+
+    <div class="articles-container">
+        <h2>All Articles</h2>
+        <ul class="list-group">
+            {% for article in articles %}
+                <li class="list-group-item article-item">
+                    <h5><a href="{% url 'article_detail' article.id %}" class="article-link">{{ article.title }}</a></h5>
+                    <p>{{ article.description|truncatewords:30 }}</p>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

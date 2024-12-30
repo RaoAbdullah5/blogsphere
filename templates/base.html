@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}BlogSphere{% endblock %}</title>
+    <style>
+        /* Color Scheme */
+        :root {
+            --primary-purple: #A294F9;
+            --lavender: #CDC1FF;
+            --light-pink: #E5D9F2;
+            --very-light-purple: #F5EFFF;
+            --mint-green: #A1D6CB;
+            --dark-text: #4a4a4a;
+            --white: #ffffff;
+        }
+
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: var(--very-light-purple);
+            color: var(--dark-text);
+            margin: 0;
+            padding: 0;
+        }
+        .wrapper {
+            min-height: 100vh;
+            display: grid;
+            grid-template-rows: auto 1fr auto;
+        }
+
+        /* Header & Navbar */
+        header {
+            background-color: var(--primary-purple);
+            width: 100%;
+            padding: 10px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 90%;
+            margin: 0 auto;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .navbar-toggler {
+            display: none;
+            background-color: var(--lavender);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: var(--primary-purple);
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .navbar-toggler.active {
+            background-color: var(--mint-green);
+        }
+
+        .navbar-nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        .navbar-nav a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 5px;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .navbar-nav a:hover {
+            background-color: var(--lavender);
+            color: var(--primary-purple);
+        }
+
+        .logout-btn {
+            background-color: var(--mint-green);
+            color: var(--white);
+            font-weight: bold;
+            padding: 8px 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+
+        .logout-btn:hover {
+            background-color: var(--lavender);
+            transform: scale(1.05);
+        }
+
+        /* Responsive Navbar */
+        .navbar-toggler {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-toggler {
+                display: inline-block;
+            }
+
+            .navbar-nav {
+                display: none;
+                flex-direction: column;
+                background-color: var(--primary-purple);
+                position: absolute;
+                top: 60px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80%;
+                padding: 10px 0;
+                border-radius: 5px;
+                text-align: center;
+                z-index: 100;
+            }
+
+            .navbar-nav.active {
+                display: flex;
+            }
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            padding: 10px 0;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        footer p {
+            margin: 0;
+        }
+
+        footer a {
+            color: var(--mint-green);
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        footer a:hover {
+            color: var(--lavender);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <header>
+            <nav>
+                <a href="/" class="navbar-brand">BlogSphere</a>
+                <button class="navbar-toggler" onclick="toggleNavbar()">☰</button>
+                <div class="navbar-nav">
+                    <a href="{% url 'article_list' %}">Articles</a>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'create_article' %}">Create Article</a>
+                        <form action="{% url 'logout' %}" method="post" style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="logout-btn">Logout</button>
+                        </form>
+                    {% else %}
+                        <a href="{% url 'login' %}">Login</a>
+                        <a href="{% url 'register' %}">Register</a>
+                    {% endif %}
+                </div>
+            </nav>
+        </header>
+
+        <main>
+            <div class="container">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2024 BlogSphere | Created by M. Abdulah Shoukat</p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleNavbar() {
+            const navbarNav = document.querySelector('.navbar-nav');
+            navbarNav.classList.toggle('active');
+            const toggler = document.querySelector('.navbar-toggler');
+            toggler.classList.toggle('active');
+        }
+    </script>
+</body>
+
+
+</html>
